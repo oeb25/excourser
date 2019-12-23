@@ -4,21 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "viewer": "parcel src/index.html",
+    "viewer": "parcel src/index.html --host 0.0.0.0",
     "build": "parcel build --no-minify src/index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dagre-d3": "^0.6.4",
-    "graphlib-dot": "^0.6.4",
+    "d3": "^5.14.2",
     "jsdom": "^15.2.1",
     "puppeteer": "^2.0.0"
   },
   "devDependencies": {
-    "@types/dagre-d3": "^0.4.39",
-    "@types/graphlib-dot": "^0.6.1",
+    "@types/d3": "^5.7.2",
     "@types/jsdom": "^12.2.4",
     "@types/puppeteer": "^2.0.0",
     "parcel-bundler": "^1.12.4",

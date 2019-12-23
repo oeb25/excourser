@@ -1,18 +1,4 @@
-body {
+* {
   padding: 0;
   margin: 0;
-}
-svg {
-  width: 100vw;
-  height: 100vh;
-}
-.node rect {
-  stroke: #333;
-  fill: #fff;
-}
-
-.edgePath path {
-  stroke: #333;
-  fill: #333;
-  stroke-width: 1.5px;
 }

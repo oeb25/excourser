@@ -1,10 +1,21 @@
 import { JSDOM } from "jsdom";
 import { promises as fs } from "fs";
 
+type Node = { title: string; edges: string[] };
+
 const run = async () => {
   const source = await fs.readFile(process.argv[2], "utf8");
   const sources: Record<string, string> = JSON.parse(source);
-  console.log("digraph G {");
+
+  const graph: Record<string, Node> = {};
+  const edge = (nr: string, edge: string) => {
+    if (nr in graph) {
+      graph[nr].edges.push(edge);
+    } else {
+      graph[nr] = { title: nr, edges: [edge] };
+    }
+  };
+
   for (const title of Object.keys(sources)) {
     const html = new JSDOM(sources[title]);
     const { document } = html.window;
@@ -12,7 +23,11 @@ const run = async () => {
     const parsed = /(\d+) (.+)/.exec(document.querySelector("h2")!.innerHTML)!;
     const courseNumber = parsed[1];
     const courseName = parsed[2];
-    console.log(`  ${courseNumber}[label="${courseName}"]`);
+    if (courseNumber in graph) {
+      graph[courseNumber].title = courseName;
+    } else {
+      graph[courseNumber] = { title: courseName, edges: [] };
+    }
 
     const preqLabel = Array.from(document.querySelectorAll("label")).find(a => {
       return a.innerHTML == "Recommended prerequisites";
@@ -24,10 +39,10 @@ const run = async () => {
       .map(a => a.innerHTML)
       .filter(d => d.match(/^\d+$/));
     for (const preq of preqs) {
-      console.log(`  ${preq} -> ${courseNumber}`);
+      edge(preq, courseNumber);
     }
   }
-  console.log("}");
+  console.log(JSON.stringify(graph));
 };
 
 run();
