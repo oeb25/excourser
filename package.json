@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "viewer": "parcel src/viewer.html",
+    "build": "parcel build src/viewer.html"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "@types/graphlib-dot": "^0.6.1",
     "@types/jsdom": "^12.2.4",
     "@types/puppeteer": "^2.0.0",
-    "parcel": "^2.0.0-alpha.3.2"
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.7.4"
   }
 }
