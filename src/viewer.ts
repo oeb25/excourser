@@ -80,7 +80,7 @@ const loop = () => {
     node.y += node.vy;
   }
   for (const node of nodes) {
-    const scale = Math.min(w / 300, h / 300);
+    const scale = Math.min(w / 600, h / 600);
 
     let fx = -node.x / scale,
       fy = -node.y / scale;
@@ -90,7 +90,7 @@ const loop = () => {
       const dx = node.x - n2.x,
         dy = node.y - n2.y;
       const d = Math.sqrt(dx * dx + dy * dy);
-      let mod = 1;
+      let mod = 2;
       // if (node.src.edges.includes(n2.nr)) {
       if (n2.src.edges.includes(node.nr) || node.src.edges.includes(n2.nr)) {
         mod = d < 20 ? 1.0 : -0.8 * d;
@@ -133,6 +133,9 @@ const loop = () => {
     if (mindm < 100) {
       selectedNode = minNode;
     }
+  }
+  if (mindm < 100) {
+    ctx.fillText(minNode!.src.title, 50, 50);
   }
 
   mouseclick = false;
