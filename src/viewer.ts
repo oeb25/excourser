@@ -23,8 +23,8 @@ for (const node of nodes) {
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d")!;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth * 2;
+canvas.height = window.innerHeight * 2;
 
 document.body.appendChild(canvas);
 
@@ -41,13 +41,13 @@ let mx = 0,
   my = 0;
 
 canvas.onmousemove = e => {
-  mx = e.clientX - w / 2;
-  my = e.clientY - h / 2;
+  mx = e.clientX * 2 - w / 2;
+  my = e.clientY * 2 - h / 2;
 };
 canvas.ontouchmove = e => {
   e.preventDefault();
-  mx = e.touches[0].screenX - w / 2;
-  my = e.touches[0].screenY - h / 2;
+  mx = e.touches[0].screenX * 2 - w / 2;
+  my = e.touches[0].screenY * 2 - h / 2;
 };
 canvas.onmousedown = () => {
   mousedown = true;
@@ -57,8 +57,8 @@ canvas.ontouchstart = e => {
   mousedown = true;
   mouseclick = true;
 
-  mx = e.touches[0].screenX - w / 2;
-  my = e.touches[0].screenY - h / 2;
+  mx = e.touches[0].screenX * 2 - w / 2;
+  my = e.touches[0].screenY * 2 - h / 2;
 };
 canvas.onmouseup = canvas.ontouchend = () => {
   mousedown = false;
@@ -67,7 +67,8 @@ canvas.onmouseup = canvas.ontouchend = () => {
 let selectedNode: null | typeof nodes[0] = null;
 
 const loop = () => {
-  (w = canvas.width), (h = canvas.height);
+  w = canvas.width;
+  h = canvas.height;
 
   let mindm = Infinity;
   let minNode = nodes[0];
@@ -134,8 +135,8 @@ const loop = () => {
       selectedNode = minNode;
     }
   }
-  if (mindm < 100) {
-    ctx.fillText(minNode!.src.title, 50, 50);
+  if (selectedNode || mindm < 100) {
+    ctx.fillText((selectedNode || minNode)!.src.title, 50, 50);
   }
 
   mouseclick = false;
