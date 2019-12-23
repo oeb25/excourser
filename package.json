@@ -1,0 +1,25 @@
+{
+  "name": "crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dagre-d3": "^0.6.4",
+    "graphlib-dot": "^0.6.4",
+    "jsdom": "^15.2.1",
+    "puppeteer": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/dagre-d3": "^0.4.39",
+    "@types/graphlib-dot": "^0.6.1",
+    "@types/jsdom": "^12.2.4",
+    "@types/puppeteer": "^2.0.0",
+    "parcel": "^2.0.0-alpha.3.2"
+  }
+}
