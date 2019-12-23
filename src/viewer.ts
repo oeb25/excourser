@@ -6,8 +6,8 @@ const nodes = Object.keys(src).map(nr => {
   return {
     nr,
     src: src[nr],
-    x: Math.random(),
-    y: Math.random(),
+    x: Math.random() * 0.001,
+    y: Math.random() * 0.001,
     vx: 0,
     vy: 0,
     indep: true
@@ -74,12 +74,13 @@ const loop = () => {
 
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "rgba(200,200,200,0.9)";
+  ctx.fillStyle = "rgba(200,200,200,1.0)";
   for (const node of nodes) {
     node.x += node.vx;
     node.y += node.vy;
-
-    const scale = Math.min(w / 200, h / 200);
+  }
+  for (const node of nodes) {
+    const scale = Math.min(w / 300, h / 300);
 
     let fx = -node.x / scale,
       fy = -node.y / scale;
@@ -91,22 +92,22 @@ const loop = () => {
       const d = Math.sqrt(dx * dx + dy * dy);
       let mod = 1;
       // if (node.src.edges.includes(n2.nr)) {
-      if (n2.src.edges.includes(node.nr)) {
-        mod = d < 40 ? -0.05 * d : -0.1 * d;
+      if (n2.src.edges.includes(node.nr) || node.src.edges.includes(n2.nr)) {
+        mod = d < 20 ? 1.0 : -0.8 * d;
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(255,255,255,${1 - d / 1000})`;
+        ctx.strokeStyle = `rgba(255,255,255,${(1 - d / 1000) * 0.5})`;
         ctx.moveTo(node.x - cx + w / 2, node.y - cy + h / 2);
         ctx.lineTo(n2.x - cx + w / 2, n2.y - cy + h / 2);
         ctx.stroke();
       }
       if (d != 0) {
-        fx += (dx / d / 3) * mod;
-        fy += (dy / d / 3) * mod;
+        fx += (dx / d / 2) * mod;
+        fy += (dy / d / 2) * mod;
       }
     }
 
-    node.vx = node.vx * 0.98 + fx * 0.02;
-    node.vy = node.vy * 0.98 + fy * 0.02;
+    node.vx = node.vx * 0.8 + fx * 0.02;
+    node.vy = node.vy * 0.8 + fy * 0.02;
 
     const dmx = mx - node.x,
       dmy = my - node.y;
@@ -132,7 +133,6 @@ const loop = () => {
     if (mindm < 100) {
       selectedNode = minNode;
     }
-    console.log(mindm, selectedNode);
   }
 
   mouseclick = false;
